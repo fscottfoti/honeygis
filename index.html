@@ -45,7 +45,6 @@ $(document).ready(function() {
   d3.text("FILES", function(contents) {
     var rows = d3.csv.parseRows(contents);
     rows.forEach(function (row) {
-      alert(row);
       var option=document.createElement("option");
       option.text=row;
       document.getElementById("fileselect").add(option,null);
