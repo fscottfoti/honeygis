@@ -80,6 +80,7 @@ $(document).ready(function() {
         }
         config["csvfname"] = fname;
       }
+      $("#filechooser option[value='temporary']").remove();
       var fname = $("#filechooser").find(":selected").text();
       if(fname != "" && !(fname in data)) {
         d3.text(fname, function(contents) {
@@ -116,7 +117,7 @@ $(document).ready(function() {
 <div id="map" style="width:100%; height:100%; position:fixed; left:0; top:0; overflow:hidden;"></div>
 <div id="filechooser" style="position:absolute; right: 15px; top: 15px;">
 <select id="fileselect" style="width: 100px;">
-<option></option>
+<option value="temporary">choose...</option>
 </select>
 </div>
 <div id="fieldchooser" style="position:absolute; right: 15px; top: 40px;">
