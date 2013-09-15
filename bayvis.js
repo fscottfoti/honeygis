@@ -8,6 +8,12 @@ function initmap() {
     {subdomains: '1234',type:'map',minZoom:10,maxZoom:16}).addTo(m);
 }
 
+function recenter(data) {
+  var lon = d3.median(data,function(v){return v.x});
+  var lat = d3.median(data,function(v){return v.y});
+  m.panTo([lat,lon]);
+}
+
 function colormap(data,config) {
 
 var nodes = data[config["csvfname"]];

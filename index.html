@@ -85,9 +85,11 @@ $(document).ready(function() {
         d3.text(fname, function(contents) {
           data[fname] = d3.csv.parse(contents);
           updatefields(fname);
+          recenter(data[fname]);
         });
       } else {
           updatefields(fname);
+          recenter(data[fname]);
       }
   });
   $("#fieldchooser").change(function(s) {
