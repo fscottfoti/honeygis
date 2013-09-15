@@ -42,6 +42,15 @@ $(document).ready(function() {
     option.text=key;
     document.getElementById("colorselect").add(option,null);
   }
+  d3.text("FILES", function(contents) {
+    var rows = d3.csv.parseRows(contents);
+    rows.forEach(function (row) {
+      alert(row);
+      var option=document.createElement("option");
+      option.text=row;
+      document.getElementById("fileselect").add(option,null);
+    });
+  });
 
   $("#colorchooser").change(function(s) {
       config["colorscheme"] = $("#colorchooser").find(":selected").text();
@@ -104,8 +113,6 @@ $(document).ready(function() {
 <div id="filechooser" style="position:absolute; right: 15px; top: 15px;">
 <select id="fileselect" style="width: 100px;">
 <option></option>
-<option>nodes.csv</option>
-<option>nodesall.csv</option>
 </select>
 </div>
 <div id="fieldchooser" style="position:absolute; right: 15px; top: 40px;">
