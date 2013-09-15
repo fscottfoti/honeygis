@@ -40,6 +40,9 @@ $(document).ready(function() {
   for(var key in colorbrewer) {
     var option=document.createElement("option");
     option.text=key;
+    if(key.toString() == config["colorscheme"]) {
+      option.selected = true;
+    }
     document.getElementById("colorselect").add(option,null);
   }
   d3.text("FILES", function(contents) {
