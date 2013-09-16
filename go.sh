@@ -1,6 +1,6 @@
 set -x
-unzip -u nodes.csv.zip
-unzip -u nodesall.csv.zip
-ls *.csv > FILES
+unzip -u data/nodes.csv.zip -d data
+unzip -u data/nodesall.csv.zip -d data
+ls data/*.csv > FILES
 open http://localhost:8000
 python -m SimpleHTTPServer
