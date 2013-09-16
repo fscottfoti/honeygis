@@ -49,7 +49,8 @@ $(document).ready(function() {
     var rows = d3.csv.parseRows(contents);
     rows.forEach(function (row) {
       var option=document.createElement("option");
-      option.text=row;
+      option.value=row;
+      option.text=row.toString().split('/').pop();
       document.getElementById("fileselect").add(option,null);
     });
   });
@@ -81,7 +82,7 @@ $(document).ready(function() {
         config["csvfname"] = fname;
       }
       $("#filechooser option[value='temporary']").remove();
-      var fname = $("#filechooser").find(":selected").text();
+      var fname = $("#filechooser").find(":selected").val();
       if(fname != "" && !(fname in data)) {
         d3.text(fname, function(contents) {
           data[fname] = d3.csv.parse(contents);
