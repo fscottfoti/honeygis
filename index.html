@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=1024, user-scalable=no">
-<link rel="icon" href="img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="images/favicon.ico" type="image/x-icon">
 <style>
       html { height: 100% }
       body { height: 100%; margin: 0; padding: 0;}
@@ -17,6 +17,10 @@
 <script src="myjs/colorbrewer.js"></script>
 <script src="myjs/hexbin.js"></script>
 <script src="myjs/bayvis.js"></script>
+	
+<link rel="stylesheet" href="js/MarkerCluster.css" />
+<link rel="stylesheet" href="js/MarkerCluster.Default.css" />
+<script src="js/leaflet.markercluster.js"></script>
 
 <title>HoneyGIS</title>
 
@@ -29,7 +33,9 @@ config = {
    opacity: .7,
    radius: .0040,
    agg: d3.mean,
-   field: "walkprob"
+   field: "walkprob",
+   hexagons: true,
+   markers: false
 }
 data = {
 }
@@ -108,6 +114,12 @@ $(document).ready(function() {
       config["opacity"] = parseFloat($("#opacitychooser").find(":selected").text());
       colormap(data,config);
   });
+  $("#renderchooser").change(function(s) {
+      config["hexagons"] = false;
+      config["markers"] = false;
+      config[$("#renderchooser").find(":selected").text()] = true;
+      colormap(data,config);
+  });
   $("#aggchooser").change(function(s) {
       config["agg"] = eval("d3."+$("#aggchooser").find(":selected").text());
       colormap(data,config);
@@ -170,6 +182,12 @@ $(document).ready(function() {
     <option>.6</option>
     <option selected>.7</option>
     <option>.85</option>
+</select>
+</div>
+<div id="renderchooser" style="position:absolute; right: 15px; top: 215px;">
+<select style="width: 100px;">
+    <option>hexagons</option>
+    <option>markers</option>
 </select>
 </div>
 </body>

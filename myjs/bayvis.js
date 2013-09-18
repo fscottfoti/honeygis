@@ -1,11 +1,12 @@
 var m = null;
 var lastlg = null;
+var lastmark = null;
 
 function initmap() {
   m = L.map("map").setView([37.8202, -122.2801],12);
 
   L.tileLayer("http://otile{s}.mqcdn.com/tiles/1.0.0/{type}/{z}/{x}/{y}.png",
-    {subdomains: '1234',type:'map',minZoom:10,maxZoom:16}).addTo(m);
+    {subdomains: '1234',type:'map',minZoom:10,maxZoom:18}).addTo(m);
 }
 
 function recenter(data) {
@@ -18,9 +19,14 @@ function colormap(data,config) {
 
 var nodes = data[config["csvfname"]];
           
+var markers = L.markerClusterGroup();
 var points = [];
 nodes.forEach(function(node) {
     points.push([+node.y, +node.x, +node[config["field"]]]);
+    var title = node[config["field"]]
+    var marker = L.marker(new L.LatLng(+node.y, +node.x), { title: title });
+	marker.bindPopup(title);
+    markers.addLayer(marker);
 });
 
 var buckets = config["buckets"];
@@ -65,8 +71,10 @@ var transform = hexagon(radius);
 transform.shift();
  
 if(lastlg != null) m.removeLayer(lastlg);
+if(lastmark != null) m.removeLayer(lastmark);
 
-var lg = L.layerGroup(hex.map(function(h) {
+if(config["hexagons"]) {
+  var lg = L.layerGroup(hex.map(function(h) {
 	return L.polygon(transform.map(function(t){
 		return [h.x+t[0],h.y+t[1]];
 	}),{
@@ -74,9 +82,12 @@ var lg = L.layerGroup(hex.map(function(h) {
 		color:colorbrewer[config["colorscheme"]][buckets][(buckets-1)-q(myave(h))],
 		fillOpacity:config["opacity"]
 	}).bindPopup("Agg value: "+myave(h).toFixed(2));
-}));
-
-lastlg = lg;
-lg.addTo(m);
-
+  }));
+  lastlg = lg;
+  lg.addTo(m);
+}
+if(config["markers"]) {
+  lastmark = markers;
+  m.addLayer(markers);
+}
 }
