@@ -1,5 +1,6 @@
 var m = null;
 var lastlg = null;
+var lastlegend = null;
 var lastmark = null;
 
 function initmap() {
@@ -73,19 +74,48 @@ transform.shift();
 if(lastlg != null) m.removeLayer(lastlg);
 if(lastmark != null) m.removeLayer(lastmark);
 
+if (lastlegend != null) lastlegend.removeFrom(m);
+lastlegend = null;
+
 if(config["hexagons"]) {
   var lg = L.layerGroup(hex.map(function(h) {
 	return L.polygon(transform.map(function(t){
 		return [h.x+t[0],h.y+t[1]];
 	}),{
 		stroke:false,
-		color:colorbrewer[config["colorscheme"]][buckets][(buckets-1)-q(myave(h))],
+		color:colorbrewer[config["colorscheme"]][buckets][q(myave(h))],
 		fillOpacity:config["opacity"]
 	}).bindPopup("Agg value: "+myave(h).toFixed(2));
   }));
   lastlg = lg;
   lg.addTo(m);
+
+  var legend = L.control({position: 'bottomright'});
+
+  legend.onAdd = function (map) {
+
+    var div = L.DomUtil.create('div', 'info legend'),
+    grades = q.range(),
+    labels = [],
+    from, to;
+
+    for (var i = grades.length-1; i >= 0; i--) {
+      var extent = q.invertExtent(grades[i]);
+      from = extent[0].toFixed(2);
+      to = extent[1].toFixed(2);
+
+      labels.push(
+        '<i style="background:' + colorbrewer[config["colorscheme"]][buckets][i] + '"></i>' +
+        from + (to ? '&ndash;' + to : '+'));
+      }
+
+      div.innerHTML = labels.join('<br>');
+      return div;
+  };
+  lastlegend = legend;
+  legend.addTo(m);
 }
+//color:colorbrewer[config["colorscheme"]][buckets][(buckets-1)-q(myave(h))],
 if(config["markers"]) {
   lastmark = markers;
   m.addLayer(markers);
