@@ -23,8 +23,10 @@ var nodes = data[config["csvfname"]];
 var markers = L.markerClusterGroup();
 var points = [];
 nodes.forEach(function(node) {
+    if(node.x == 0.0 && node.y == 0.0) return; // almost always means empty
     points.push([+node.y, +node.x, +node[config["field"]]]);
     var title = node[config["field"]]
+    if(title == 0.0) return;
     var marker = L.marker(new L.LatLng(+node.y, +node.x), { title: title });
 	marker.bindPopup(title);
     markers.addLayer(marker);
@@ -40,7 +42,6 @@ var hexbin = d3.hexbin()
     .radius(radius);
 
 var hex = hexbin(points);
-
 function myave(h) {return config["agg"](h,function(v){return v[2]});}
 
 if(config["quantile"] == true) {
