@@ -32,8 +32,8 @@ config = {
    buckets: 9,
    quantile: false,
    opacity: .7,
-   radius: .0040,
-   agg: d3.mean,
+   radius: .006,
+   agg: d3.sum,
    field: "walkprob",
    hexagons: true,
    markers: false
@@ -161,8 +161,8 @@ $(document).ready(function() {
 <select style="width: 100px;">
     <option>.002</option>
     <option>.003</option>
-    <option selected>.004</option>
-    <option>.006</option>
+    <option>.004</option>
+    <option selected>.006</option>
     <option>.008</option>
     <option>.011</option>
     <option>.02</option>
@@ -172,9 +172,9 @@ $(document).ready(function() {
 <select style="width: 100px;">
     <option>min</option>
     <option>max</option>
-    <option selected>mean</option>
+    <option>mean</option>
     <option>median</option>
-    <option>sum</option>
+    <option selected>sum</option>
 </select>
 </div>
 <div id="opacitychooser" style="position:absolute; right: 10px; top: 190px;">
