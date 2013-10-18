@@ -83,7 +83,6 @@ $(document).ready(function() {
         option.value="temporary";
         document.getElementById("fieldselect").add(option,null);
         for(var key in data[fname][0]) {
-          console.log(key);
           var option=document.createElement("option");
           option.text=key;
           document.getElementById("fieldselect").add(option,null);

@@ -45,11 +45,10 @@ var hex = hexbin(points);
 function myave(h) {return config["agg"](h,function(v){return v[2]});}
 
 if(config["quantile"] == true) {
-    var q = d3.scale.quantile()
-        .domain(hex.map(function(h){return myave(h)})
-        .reduce(function(a,b){if(a.indexOf(b)===-1){a.push(b)};return a;},[])
-        .sort(function(a,b){return a-b}))
-        .range(d3.range(buckets));
+   var q = d3.scale.quantile()
+       .domain(hex.map(function(h){return myave(h)})
+       .sort(function(a,b){return a-b}))
+       .range(d3.range(buckets));
 } else {
    var q = d3.scale.quantize()
       .domain(d3.extent(hex.map(function(h){return myave(h)})))
