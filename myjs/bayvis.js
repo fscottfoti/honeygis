@@ -51,7 +51,7 @@ if(config["quantile"] == true) {
         .sort(function(a,b){return a-b}))
         .range(d3.range(buckets));
 } else {
-  var q = d3.scale.quantize()
+   var q = d3.scale.quantize()
       .domain(d3.extent(hex.map(function(h){return myave(h)})))
       .range(d3.range(buckets));
 }
