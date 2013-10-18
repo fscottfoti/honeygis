@@ -80,11 +80,13 @@ lastlegend = null;
 
 if(config["hexagons"]) {
   var lg = L.layerGroup(hex.map(function(h) {
-	return L.polygon(transform.map(function(t){
+        var v = q(myave(h));
+        if(v == undefined) v = 0;
+        return L.polygon(transform.map(function(t){
 		return [h.x+t[0],h.y+t[1]];
 	}),{
 		stroke:false,
-		color:colorbrewer[config["colorscheme"]][buckets][q(myave(h))],
+		color:colorbrewer[config["colorscheme"]][buckets][v],
 		fillOpacity:config["opacity"]
 	}).bindPopup("Agg value: "+myave(h).toFixed(2));
   }));
