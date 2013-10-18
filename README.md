@@ -4,7 +4,11 @@ honeygis
 Using HoneyGIS
 -----------------------
 
+![screenshot](http://fscottfoti.github.io/honeygis/img/screenshot.png)
+
 HoneyGIS is the simplest GIS imaginable.  It's ideal for medium-sized amounts of point data (around 20-40k points).  First you add the data (see below) and start HoneyGIS (also see below).  Pick a file in the first dropdown (HoneyGIS will move to the center of data, anywhere in the world), and a column in the second dropdown.  A set of colored hexagons will be visualized which represent a summary of the underlying point data.
+
+Or just [go and try it](http://fscottfoti.github.io/honeygis/).
 
 The following parameters are supported:
 * 3rd dropdown: color scheme
